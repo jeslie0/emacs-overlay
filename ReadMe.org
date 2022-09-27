@@ -22,7 +22,7 @@ outputs = { self, nixpkgs, home-manager,  ... }:
     pkgs = import nixpkgs {
       inherit system;
       config = { allowUnfree = true; };
-      overlays = [ self.inputs.emacs-overlay ]; # Add the overlay here!
+      overlays = [ self.inputs.emacs-overlay.overlays.default ]; # Add the overlay here!
     };
 
     lib = nixpkgs.lib;

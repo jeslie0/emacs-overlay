@@ -6,14 +6,16 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay/8ff1524472abef7c86c9e9c221d8969911074b4a";
     flake-utils.url = "github:numtide/flake-utils";
   };
+
   outputs = { self, nixpkgs, emacs-overlay, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (
+    {
+      overlays.default = final: prev: emacs-overlay.overlay final prev;
+    } // flake-utils.lib.eachDefaultSystem (
       system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in
         {
           packages = emacs-overlay.packages.${system};
-          overlays.default = final: prev: emacs-overlay.overlay final prev;
         }
     );
 
